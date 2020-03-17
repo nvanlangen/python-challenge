@@ -43,6 +43,7 @@ pl_diff_list.pop(0)
 #Function to write output, parameter is file or terminal
 def write_output(output_mode):
     if output_mode=="file":
+        #Write output to a file
         orig_stdout = sys.stdout
         analysispath = os.path.join('.', 'Resources', 'analysis.txt')
         analysis_file = open(analysispath,"w")
