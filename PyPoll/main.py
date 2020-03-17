@@ -36,7 +36,7 @@ total_votes = sum(candidate_votes_list)
 #Set index for loop to 0
 candidate_index=0
 
-#Print Election Results
+#Print Election Results to console
 print("Election Results")
 print("-------------------------")
 print(f"Total Votes: {total_votes}")
