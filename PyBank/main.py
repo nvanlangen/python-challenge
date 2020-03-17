@@ -1,10 +1,10 @@
 #Modules
 import os
 import csv
+import sys
 
-#Set up file path and names
+#Set up input file path and name
 csvpath = os.path.join('.', 'Resources', 'budget_data.csv')
-analysispath = os.path.join('.', 'Resources', 'analysis.txt')
 
 #Define lists used
 month_list = []
@@ -40,33 +40,37 @@ with open(csvpath,"r") as csvfile:
 #Remove first value from the profit/loss difference list as there is no difference for the first month
 pl_diff_list.pop(0)
 
-#Print Results to Console
-print("Financial Analysis")
-print("----------------------------")
+#Function to write output, parameter is file or terminal
+def write_output(output_mode):
+    if output_mode=="file":
+        orig_stdout = sys.stdout
+        analysispath = os.path.join('.', 'Resources', 'analysis.txt')
+        analysis_file = open(analysispath,"w")
+        sys.stdout = analysis_file
 
-#Total Months length of the month list
-print(f"Total Months: {len(month_list)}")
+    print("Financial Analysis")
+    print("----------------------------")
 
-#Total sum of the profit/loss list
-print(f"Total: ${sum(profit_loss_list)}")
+    #Total Months length of the month list
+    print(f"Total Months: {len(month_list)}")
 
-#Average is sum/len of the profit/loss list
-print(f"Average  Change: ${round(sum(pl_diff_list) / len(pl_diff_list),2)}")
+    #Total sum of the profit/loss list
+    print(f"Total: ${sum(profit_loss_list)}")
 
-#Greatest Increase is max of profit/loss difference list, month uses index of the max value + 1 to account for the first month being removed
-print(f"Greatest Increase in Profits: {month_list[pl_diff_list.index(max(pl_diff_list))+1]} (${max(pl_diff_list)})")
+    #Average is sum/len of the profit/loss list
+    print(f"Average  Change: ${round(sum(pl_diff_list) / len(pl_diff_list),2)}")
 
-#Greatest Decrease is min of profit/loss difference list, month uses index of the min value + 1 to account for the first month being removed
-print(f"Greatest Decrease in Profits: {month_list[pl_diff_list.index(min(pl_diff_list))+1]} (${min(pl_diff_list)})")
+    #Greatest Increase is max of profit/loss difference list, month uses index of the max value + 1 to account for the first month being removed
+    print(f"Greatest Increase in Profits: {month_list[pl_diff_list.index(max(pl_diff_list))+1]} (${max(pl_diff_list)})")
 
-#Open output file
-with open(analysispath,"w") as analysis_file:
-    #Write lines to the text file, same as was printed on the console, not using csv for output as it is not comma separated data
-    analysis_file.write("Financial Analysis\n")
-    analysis_file.write("----------------------------\n")
-    analysis_file.write("Total Months: " + str(len(profit_loss_list))+"\n")
-    analysis_file.write("Total: $" + str(sum(profit_loss_list))+"\n")
-    analysis_file.write("Average  Change: $" + str(round(sum(pl_diff_list) / len(pl_diff_list),2))+"\n")
-    analysis_file.write("Greatest Increase in Profits: " + month_list[pl_diff_list.index(max(pl_diff_list))+1] + "($" + str(max(pl_diff_list)) + ")\n")
-    analysis_file.write("Greatest Decrease in Profits: " + month_list[pl_diff_list.index(min(pl_diff_list))+1] + "($" + str(min(pl_diff_list)) + ")\n")
-    analysis_file.close()
+    #Greatest Decrease is min of profit/loss difference list, month uses index of the min value + 1 to account for the first month being removed
+    print(f"Greatest Decrease in Profits: {month_list[pl_diff_list.index(min(pl_diff_list))+1]} (${min(pl_diff_list)})")
+
+    #Close the file and reset the stdout to the terminal
+    if output_mode=="file":
+        analysis_file.close()
+        sys.stdout = orig_stdout
+
+#Call function to write the file and again for the terminal
+write_output("file")
+write_output("terminal")
