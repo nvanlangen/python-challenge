@@ -13,7 +13,7 @@ candidate_votes_list = []
 #Open file
 with open(csvpath,"r") as csvfile:
 
-    #Set up file reader with , delimiter
+    #Set up file reader with comma delimiter
     csvreader = csv.reader(csvfile, delimiter=',')
     
     #Read header and save in variable
@@ -50,7 +50,7 @@ def write_results(output_mode):
     print("-------------------------")
     print(f"Total Votes: {total_votes}")
     print("-------------------------")
-    #Calculate percentage and display the Candidate, Percentage and Numbr of Votes
+    #Calculate percentage and display the Candidate, Percentage and Number of Votes
     for candidate in candidate_list:
         print(f"{candidate}: {candidate_votes_list[candidate_index] / total_votes *100:.3f}% ({candidate_votes_list[candidate_index]})")
         candidate_index += 1

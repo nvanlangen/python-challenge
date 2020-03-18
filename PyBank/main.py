@@ -17,7 +17,7 @@ pl_diff = 0
 #Open input file
 with open(csvpath,"r") as csvfile:
 
-    #Set up file reader with , delimiter
+    #Set up file reader with comma delimiter
     csvreader = csv.reader(csvfile, delimiter=',')
     
     #Read header and save in variable
